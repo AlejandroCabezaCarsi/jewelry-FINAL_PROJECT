@@ -23,7 +23,7 @@ return new class extends Migration
             $table-> string('address');
             $table-> unsignedBigInteger('socialSecurityNumber');
             $table-> string('bankAccount');
-            $table-> string('role_ID');
+            $table-> unsignedBigInteger('role_ID');
 
             $table -> foreign('role_ID') -> references('id') -> on('roles');
             $table->timestamps();

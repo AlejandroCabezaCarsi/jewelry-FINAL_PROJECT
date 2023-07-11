@@ -22,13 +22,13 @@ return new class extends Migration
             $table -> string('city');
             $table -> string('postalCode');
             $table -> string('address');
-            $table -> integer('role_ID');
+            $table -> unsignedBigInteger('role_ID');
             $table -> boolean('isActive'); 
             $table->rememberToken();
 
 
 
-            $table -> foreign('role_ID') -> references('id') -> on('roles');
+            $table -> foreign('role_ID')->references('id')->on('roles');
             $table->timestamps();
         });
     }
