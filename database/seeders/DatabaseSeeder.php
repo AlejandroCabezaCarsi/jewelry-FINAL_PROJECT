@@ -21,7 +21,10 @@ class DatabaseSeeder extends Seeder
             $this -> call ([
                 RoleSeeder::class,
                 StoreSeeder::class,
-                StatusSeeder::class
+                StatusSeeder::class,
+                MaterialSeeder::class,
+                StatusOrderSeeder::class,
+                TypeSeeder::class
             ]);
             
             \App\Models\User::factory(10)->create();

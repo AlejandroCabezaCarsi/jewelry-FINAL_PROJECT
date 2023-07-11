@@ -13,8 +13,8 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table()-> insert([
-            
+        DB::table('types')-> insert([
+
             ['name'=>'anillo'],
             ['name'=>'collar'],
             ['name'=>'colgante'],
