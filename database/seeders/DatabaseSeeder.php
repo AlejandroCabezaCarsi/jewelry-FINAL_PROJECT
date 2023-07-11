@@ -25,5 +25,8 @@ class DatabaseSeeder extends Seeder
         $this -> call ([
             StoreSeeder::class
         ]);
+        $this -> call ([
+            StatusSeeder::class
+        ]);
     }
 }
