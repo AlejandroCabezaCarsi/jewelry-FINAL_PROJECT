@@ -15,4 +15,8 @@ class Order extends Model
     public function statusOrders() {
         return $this -> belongsTo(StatusOrders::class);
     }
+
+    public function products(){
+        return $this -> belongsToMany(Product::class);
+    }
 }
