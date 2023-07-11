@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('statusOrder_ID');
+            $table->unsignedBigInteger('statusOrder_ID');
             $table->unsignedBigInteger('user_ID');
 
-            $table -> foreign('statusOrder_ID')->references('id')->on('statusOrder');
-            $table -> foreign('user_ID')->references('id')->on('user');
+            $table -> foreign('statusOrder_ID')->references('id')->on('statusOrders');
+            $table -> foreign('user_ID')->references('id')->on('users');
 
             $table->timestamps();
         });
