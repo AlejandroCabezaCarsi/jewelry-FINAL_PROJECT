@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table -> string('email');
-            $table -> string('phoneNumber');
             $table -> string('address');
-            $table -> string('postalCode'); 
+            $table -> integer('postalCode'); 
+            $table -> string('email');
+            $table -> integer('phoneNumber');
             $table -> string('city');
             $table->timestamps();
         });
