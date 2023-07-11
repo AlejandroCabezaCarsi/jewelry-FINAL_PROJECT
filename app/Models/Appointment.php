@@ -16,8 +16,12 @@ class Appointment extends Model
     public function worker(){   
         return $this->belongsTo(Worker::class);
     }
-    
+
     public function store(){   
+        return $this->belongsTo(Store::class);
+    }
+
+    public function status(){   
         return $this->belongsTo(Store::class);
     }
 

@@ -16,10 +16,13 @@ return new class extends Migration
             $table -> unsignedBigInteger('user_ID');
             $table -> unsignedBigInteger('worker_ID');
             $table -> unsignedBigInteger('store_ID');
+            $table -> unsignedBigInteger('status_ID');
+
 
             $table -> foreign('user_ID') -> references('id') -> on('users');
             $table -> foreign('worker_ID') -> references('id') -> on('workers');
             $table -> foreign('store_ID') -> references('id') -> on('stores');
+            $table -> foreign('status_ID') -> references('id') -> on('status');
             $table->timestamps();
         });
     }
