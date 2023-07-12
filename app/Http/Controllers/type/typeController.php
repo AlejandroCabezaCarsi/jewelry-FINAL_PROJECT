@@ -146,5 +146,32 @@ class typeController extends Controller
 
     // GET ALL TYPES
 
+    public function getAllTypes(){
+        try {
+            
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $getAllTypes = Type::all();
+
+            return response()->json([
+                'message' => 'All types retrieved',
+                'data' => $getAllTypes
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving materials ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving materials'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //GET ONE TYPE BY ID 
 }
