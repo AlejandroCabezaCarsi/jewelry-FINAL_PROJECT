@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\materials\materialsController;
+use App\Http\Controllers\type\typeController;
 use App\Http\Controllers\user\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,3 +37,7 @@ Route::delete('/deleteMaterial/{id}', [materialsController::class, 'deleteMateri
 Route::put('/updateMaterial/{id}', [materialsController::class, 'updateMaterial'])->middleware('auth:sanctum');
 Route::get('/getAllMaterials', [materialsController::class, 'getAllMaterials'])->middleware('auth:sanctum');
 Route::get('/getOneMaterial/{id}', [materialsController::class, 'getOneMaterialByID'])->middleware('auth:sanctum');
+
+//TYPE ROUTES 
+
+Route::post('/createType', [typeController::class, 'createType'])->middleware('auth:sanctum');
