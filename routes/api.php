@@ -44,3 +44,4 @@ Route::post('/createType', [typeController::class, 'createType'])->middleware('a
 Route::delete('/deleteType/{id}', [typeController::class, 'deleteTypeByID'])->middleware(('auth:sanctum'));
 Route::put('/updateType/{id}', [typeController::class, 'updateType'])->middleware('auth:sanctum');
 Route::get('/getAllTypes', [typeController::class, 'getAllTypes'])->middleware('auth:sanctum');
+Route::get('/getOneType/{id}', [typeController::class, 'getOneTypeByID'])->middleware('auth:sanctum');

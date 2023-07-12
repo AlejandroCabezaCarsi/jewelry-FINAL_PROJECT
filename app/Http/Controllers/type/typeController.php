@@ -173,5 +173,36 @@ class typeController extends Controller
         }
     }
 
-    //GET ONE TYPE BY ID 
+    //GET ONE TYPE BY ID
+
+    public function getOneTypeByID($id){
+        try {
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $typeFind = Type::find($id);
+
+            if (!$typeFind) {
+                return response()->json([
+                    'message' => 'Type not found'
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Type retrieved',
+                'data' => $typeFind
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving the type ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving the type '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
