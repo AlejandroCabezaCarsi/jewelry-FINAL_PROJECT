@@ -173,5 +173,36 @@ class materialsController extends Controller
         }
     }
 
-    //GET ONE MATERIAL BY ID 
+    //GET ONE MATERIAL BY ID
+
+    public function getOneMaterialByID($id){
+        try {
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $materialFind = Material::find($id);
+
+            if (!$materialFind) {
+                return response()->json([
+                    'message' => 'Material not found'
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Material retrieved',
+                'data' => $materialFind
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving the material ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving the material '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

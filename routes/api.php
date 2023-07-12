@@ -35,3 +35,4 @@ Route::post('/createMaterial', [materialsController::class, 'createMaterial'])->
 Route::delete('/deleteMaterial/{id}', [materialsController::class, 'deleteMaterialByID'])->middleware(('auth:sanctum'));
 Route::put('/updateMaterial/{id}', [materialsController::class, 'updateMaterial'])->middleware('auth:sanctum');
 Route::get('/getAllMaterials', [materialsController::class, 'getAllMaterials'])->middleware('auth:sanctum');
+Route::get('/getOneMaterial/{id}', [materialsController::class, 'getOneMaterialByID'])->middleware('auth:sanctum');
