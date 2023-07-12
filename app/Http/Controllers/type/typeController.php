@@ -94,7 +94,55 @@ class typeController extends Controller
         }
     }
 
-    //UPDATE TYPE BY ID 
+    //UPDATE TYPE BY ID
+
+    public function updateType(Request $request, $id){
+        try {
+
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $validator = Validator::make($request->all(),[
+                'name'=>'string'
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            };
+
+            $validData = $validator->validated();
+
+            $typeFind = Type::find($id);
+
+            if (!$typeFind) {
+                return response()->json([
+                    'message' => 'Material not found'
+                ]);
+            }
+
+            $typeFind->name = $validData['name'];
+
+
+            $typeFind -> save();
+
+            
+            return response()->json([
+                'message' => 'Type updated'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error updating the type ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating the type '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // GET ALL TYPES
 
