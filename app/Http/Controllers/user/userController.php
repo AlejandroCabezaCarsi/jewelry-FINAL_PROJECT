@@ -219,7 +219,32 @@ class userController extends Controller
 
     //USER GET ALL 
 
-    
+    public function getAllUsers(){
+        try {
+            
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $getAllUsers = User::all();
+
+            return response()->json([
+                'message' => 'All users retrieved',
+                'data' => $getAllUsers
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving users ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving users'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }
