@@ -18,9 +18,7 @@ class userController extends Controller
     //USER REGISTER
 
     public function register(Request $request){
-        try {
-
-            
+        try { 
             $validator = Validator::make($request->all(),[
                 'name' => 'required|string',
                 'surname' => 'required|string',
@@ -32,14 +30,10 @@ class userController extends Controller
                 'city' => 'required|string',
                 'role_ID' => 'required',
                 'isActive' => 'required'
-
-
             ]);
 
             if($validator->fails()){
-
                 return response()->json($validator->errors(),400);
-
             };
 
             $validData = $validator -> validate();
@@ -63,7 +57,6 @@ class userController extends Controller
                 'data' => $newUser,
                 'token' => $token
             ], Response::HTTP_CREATED);
-
 
         } catch (\Throwable $th) {
 
@@ -125,6 +118,72 @@ class userController extends Controller
     }
 
     //USER UPDATE
+
+    public function updateMyAccount(Request $request){
+
+        try {
+            
+            $validator = Validator::make($request->all(),[
+                'name' => 'string',
+                'surname' => 'string',
+                'email'=>'string',
+                'city'=>'string',
+                'postalCode' => 'string',
+                'address' => 'string'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }; 
+
+            $validData = $validator->validated();
+
+            $user = auth()->user();
+            
+            $userFind = User::find($user['id']);
+
+            if (!$userFind) {
+                return response()->json([
+                    'message' => 'User not found'
+                ]);
+            }
+
+            if (isset($validData['name'])) {
+                $userFind->name = $validData['name'];
+            }
+
+            if (isset($validData['surname'])) {
+                $userFind->surname = $validData['surname'];
+            }
+            if (isset($validData['email'])) {
+                $userFind->email = $validData['email'];
+            }
+            if (isset($validData['city'])) {
+                $userFind->city = $validData['city'];
+            }
+            if (isset($validData['postalCode'])) {
+                $userFind->postalCode = $validData['postalCode'];
+            }
+            if (isset($validData['address'])) {
+                $userFind->address = $validData['address'];
+            }
+
+            $userFind->save();
+
+            return response()->json([
+                'message' => 'User updated'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+
+            Log::error('Error updating the user ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating the user '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
     //USER DELETE
 
