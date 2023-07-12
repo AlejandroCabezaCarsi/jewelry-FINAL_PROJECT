@@ -57,9 +57,44 @@ class materialsController extends Controller
 
     }
 
-    //UPDATE MATERIAL 
-
     //DELETE MATERIAL
+
+    public function deleteMaterialByID(Request $request){
+
+        try {
+            
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $findMaterial = Material::find($request->id);
+
+            if(!$findMaterial){
+                return response()->json([
+                    'message' => 'Material not found'
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            Material::destroy($request->id);
+            
+            return response()->json([
+                'message'=>'Material deleted'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error deleting material ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deleting material '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //UPDATE MATERIAL 
 
     //GET ALL MATERIALS
 

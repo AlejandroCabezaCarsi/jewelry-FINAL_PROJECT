@@ -32,4 +32,4 @@ Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('
 //MATERIAL ROUTES 
 
 Route::post('/createMaterial', [materialsController::class, 'createMaterial'])->middleware('auth:sanctum');
-
+Route::delete('/deleteMaterial/{id}', [materialsController::class, 'deleteMaterialByID'])->middleware(('auth:sanctum'));
