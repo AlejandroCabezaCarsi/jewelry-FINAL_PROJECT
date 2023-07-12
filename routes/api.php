@@ -41,3 +41,4 @@ Route::get('/getOneMaterial/{id}', [materialsController::class, 'getOneMaterialB
 //TYPE ROUTES 
 
 Route::post('/createType', [typeController::class, 'createType'])->middleware('auth:sanctum');
+Route::delete('/deleteType/{id}', [typeController::class, 'deleteTypeByID'])->middleware(('auth:sanctum'));
