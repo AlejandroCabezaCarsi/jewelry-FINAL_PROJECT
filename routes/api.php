@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\materials\materialsController;
 use App\Http\Controllers\user\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,8 @@ Route::post('/login', [userController::class, 'login']);
 Route::delete('/delete', [userController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::put('/update', [userController::class, 'updateMyAccount'])->middleware('auth:sanctum');
 Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('auth:sanctum');
+
+//MATERIAL ROUTES 
+
+Route::post('/createMaterial', [materialsController::class, 'createMaterial'])->middleware('auth:sanctum');
+
