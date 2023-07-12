@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [userController::class, 'register']);
 Route::post('/login', [userController::class, 'login']);
+Route::delete('/delete', [userController::class, 'deleteMyAccount'])->middleware('auth:sanctum');

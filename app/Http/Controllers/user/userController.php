@@ -75,6 +75,8 @@ class userController extends Controller
         }
     }
 
+    //USER LOGIN
+
 
     public function login(Request $request){
         try {
@@ -121,6 +123,44 @@ class userController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    //USER UPDATE
+
+    //USER DELETE
+
+    public function deleteMyAccount(){
+        try {
+
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            User::destroy($user->id);
+
+            return response()->json([
+                'message'=>'User deleted'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error deleting user ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deleting user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //USER RESTORE
+
+    //USER SOFT DELETE
+
+    //USER GET ALL 
+
+    
 
 
 }
