@@ -94,7 +94,55 @@ class materialsController extends Controller
         }
     }
 
-    //UPDATE MATERIAL 
+    //UPDATE MATERIAL
+
+    public function updateMaterial(Request $request, $id){
+        try {
+
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $validator = Validator::make($request->all(),[
+                'name'=>'string'
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            };
+
+            $validData = $validator->validated();
+
+            $materialFind = Material::find($id);
+
+            if (!$materialFind) {
+                return response()->json([
+                    'message' => 'Material not found'
+                ]);
+            }
+
+            $materialFind->name = $validData['name'];
+
+
+            $materialFind -> save();
+
+            
+            return response()->json([
+                'message' => 'Material updated'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error updating the material ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating the material '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //GET ALL MATERIALS
 

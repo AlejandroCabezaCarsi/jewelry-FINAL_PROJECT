@@ -33,3 +33,4 @@ Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('
 
 Route::post('/createMaterial', [materialsController::class, 'createMaterial'])->middleware('auth:sanctum');
 Route::delete('/deleteMaterial/{id}', [materialsController::class, 'deleteMaterialByID'])->middleware(('auth:sanctum'));
+Route::put('/updateMaterial/{id}', [materialsController::class, 'updateMaterial'])->middleware('auth:sanctum');
