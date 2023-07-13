@@ -56,4 +56,48 @@ class statusOrdersController extends Controller
         }
 
     }
+
+
+    //DELETE STATUS ORDER
+
+    public function deleteStatusOrderByID(Request $request){
+
+        try {
+            
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $findStatusOrder = StatusOrder::find($request->id);
+
+            if(!$findStatusOrder){
+                return response()->json([
+                    'message' => 'Status order not found'
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            StatusOrder::destroy($request->id);
+            
+            return response()->json([
+                'message'=>'Status order deleted'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error deleting status order ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deleting status order '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //UPDATE STATUS ORDER BY ID
+
+    //GET ALL STATUS ORDER
+
+    //GET ONE STATUS ORDER BY ID
 }

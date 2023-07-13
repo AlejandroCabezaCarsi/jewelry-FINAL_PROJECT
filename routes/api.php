@@ -51,3 +51,4 @@ Route::get('/getOneType/{id}', [typeController::class, 'getOneTypeByID'])->middl
 //STATUS ORDER ROUTES
 
 Route::post('/createStatusOrder', [statusOrdersController::class, 'createStatusOrder'])->middleware('auth:sanctum');
+Route::delete('/deleteStatusOrder/{id}', [statusOrdersController::class, 'deleteStatusOrderByID'])->middleware(('auth:sanctum'));
