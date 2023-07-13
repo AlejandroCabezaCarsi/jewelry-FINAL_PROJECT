@@ -63,6 +63,33 @@ class orderController extends Controller
 
     //GET ALL ORDERS
 
+    public function getAllOrders(){
+        try {
+
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $getAllOrders = Order::all();
+
+            return response()->json([
+                'message' => 'All orders retrieved',
+                'data' => $getAllOrders
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving orders ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving orders'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //GET ONE ORDER 
 
 
