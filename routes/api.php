@@ -54,3 +54,4 @@ Route::post('/createStatusOrder', [statusOrdersController::class, 'createStatusO
 Route::delete('/deleteStatusOrder/{id}', [statusOrdersController::class, 'deleteStatusOrderByID'])->middleware(('auth:sanctum'));
 Route::put('/updateStatusOrder/{id}', [statusOrdersController::class, 'updateStatusOrderByID'])->middleware('auth:sanctum');
 Route::get('/getAllStatusOrders', [statusOrdersController::class, 'getAllStatusOrders'])->middleware('auth:sanctum');
+Route::get('/getOneStatusOrder/{id}', [statusOrdersController::class, 'getOneStatusOrderByID'])->middleware('auth:sanctum');

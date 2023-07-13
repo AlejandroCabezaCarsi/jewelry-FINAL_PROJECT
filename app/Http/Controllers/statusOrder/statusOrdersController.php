@@ -176,4 +176,35 @@ class statusOrdersController extends Controller
     }
 
     //GET ONE STATUS ORDER BY ID
+
+    public function getOneStatusOrderByID($id){
+        try {
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $statusOrderFind = StatusOrder::find($id);
+
+            if (!$statusOrderFind) {
+                return response()->json([
+                    'message' => 'Status order not found'
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Status order retrieved',
+                'data' => $statusOrderFind
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving the status order ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving the status order '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
