@@ -97,6 +97,55 @@ class statusOrdersController extends Controller
 
     //UPDATE STATUS ORDER BY ID
 
+    public function updateStatusOrderByID(Request $request, $id){
+        try {
+
+            $user = auth()->user();
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
+
+            $validator = Validator::make($request->all(),[
+                'name'=>'string'
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            };
+
+            $validData = $validator->validated();
+
+            $statusOrderFind = StatusOrder::find($id);
+
+            if (!$statusOrderFind) {
+                return response()->json([
+                    'message' => 'Status order not found'
+                ]);
+            }
+
+            $statusOrderFind->name = $validData['name'];
+
+
+            $statusOrderFind -> save();
+
+            
+            return response()->json([
+                'message' => 'Status order updated'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error updating the status order ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating the status order '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     //GET ALL STATUS ORDER
 
     //GET ONE STATUS ORDER BY ID
