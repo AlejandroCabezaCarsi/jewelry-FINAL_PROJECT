@@ -215,9 +215,24 @@ class userController extends Controller
 
     //USER RESTORE
 
-    //USER SOFT DELETE
+    public function restoreAccount($id){
+        try {
+            User::withTrashed()->where('id',$id)->restore();
 
-    //USER GET ALL 
+            return response()->json([
+                'message'=>'User restored'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error restoring user ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error restoring user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    //USER GET ALL WITHOUT SOFT DELETES
 
     public function getAllUsers(){
         try {
