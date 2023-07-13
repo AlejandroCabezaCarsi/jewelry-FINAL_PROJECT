@@ -122,7 +122,7 @@ class statusOrdersController extends Controller
 
             if (!$statusOrderFind) {
                 return response()->json([
-                    'message' => 'Status order not found'
+                    'message' => 'Status orders not found'
                 ]);
             }
 
@@ -147,6 +147,33 @@ class statusOrdersController extends Controller
 
 
     //GET ALL STATUS ORDER
+
+    public function getAllStatusOrders(){
+        try {
+            
+            $user = auth()->user(); 
+
+            // if($user['role_ID'] > 3){
+            //     return response()->json([                
+            //     'message' => 'You dont have athoritation to get all users'               
+            // ], Response::HTTP_UNAUTHORIZED);
+            // }
+
+            $getAllTypes = StatusOrder::all();
+
+            return response()->json([
+                'message' => 'All status orders retrieved',
+                'data' => $getAllTypes
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving status orders ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving status orders'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //GET ONE STATUS ORDER BY ID
 }
