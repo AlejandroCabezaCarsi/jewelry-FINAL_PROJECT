@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\materials\materialsController;
+use App\Http\Controllers\statusOrder\statusOrdersController;
 use App\Http\Controllers\type\typeController;
 use App\Http\Controllers\user\userController;
 use Illuminate\Http\Request;
@@ -45,3 +46,8 @@ Route::delete('/deleteType/{id}', [typeController::class, 'deleteTypeByID'])->mi
 Route::put('/updateType/{id}', [typeController::class, 'updateType'])->middleware('auth:sanctum');
 Route::get('/getAllTypes', [typeController::class, 'getAllTypes'])->middleware('auth:sanctum');
 Route::get('/getOneType/{id}', [typeController::class, 'getOneTypeByID'])->middleware('auth:sanctum');
+
+
+//STATUS ORDER ROUTES
+
+Route::post('/createStatusOrder', [statusOrdersController::class, 'createStatusOrder'])->middleware('auth:sanctum');
