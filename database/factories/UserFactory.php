@@ -27,7 +27,6 @@ class UserFactory extends Factory
             'postalCode'=>fake()->postcode(),
             'address'=>fake()->address(),
             'role_ID'=> 4,
-            'isActive'=>true,
             'remember_token' => Str::random(10),
         ];
     }

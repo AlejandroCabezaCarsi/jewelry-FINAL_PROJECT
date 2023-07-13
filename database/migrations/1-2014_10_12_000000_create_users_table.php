@@ -23,8 +23,8 @@ return new class extends Migration
             $table -> string('postalCode');
             $table -> string('address');
             $table -> unsignedBigInteger('role_ID');
-            $table -> boolean('isActive'); 
             $table->rememberToken();
+            $table-> softDeletes();
 
 
 
