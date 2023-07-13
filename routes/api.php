@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\materials\materialsController;
+use App\Http\Controllers\order\orderController;
 use App\Http\Controllers\statusOrder\statusOrdersController;
 use App\Http\Controllers\type\typeController;
 use App\Http\Controllers\user\userController;
@@ -56,3 +57,9 @@ Route::delete('/deleteStatusOrder/{id}', [statusOrdersController::class, 'delete
 Route::put('/updateStatusOrder/{id}', [statusOrdersController::class, 'updateStatusOrderByID'])->middleware('auth:sanctum');
 Route::get('/getAllStatusOrders', [statusOrdersController::class, 'getAllStatusOrders'])->middleware('auth:sanctum');
 Route::get('/getOneStatusOrder/{id}', [statusOrdersController::class, 'getOneStatusOrderByID'])->middleware('auth:sanctum');
+
+
+//ORDER ROUTES
+
+Route::post('/createOrder', [orderController::class, 'createOrder'])->middleware('auth:sanctum');
+
