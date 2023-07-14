@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\buy\buyController;
 use App\Http\Controllers\materials\materialsController;
 use App\Http\Controllers\order\orderController;
 use App\Http\Controllers\statusOrder\statusOrdersController;
@@ -63,7 +64,9 @@ Route::get('/getOneStatusOrder/{id}', [statusOrdersController::class, 'getOneSta
 
 Route::post('/createOrder', [orderController::class, 'createOrder'])->middleware('auth:sanctum');
 Route::get('/getAllOrders', [orderController::class, 'getAllOrders'])->middleware('auth:sanctum');
+Route::get('/getOrder/{id}', [orderController::class, 'getOneOrder']);
 
 
 //BUY ROUTES 
 
+Route::get('/getAllBuys', [buyController::class, 'getAllBuys'])->middleware('auth:sanctum');
