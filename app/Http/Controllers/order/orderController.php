@@ -90,6 +90,39 @@ class orderController extends Controller
         }
     }
 
+    //GET ALL ORDERS
+
+    public function getAllOrdersByUserID(){
+        try {
+            $user = auth()->user();
+    
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not authenticated'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+    
+            $userID = $user->id;
+    
+            $getAllOrders = Order::where('user_id', $userID)
+                ->with('product', 'product.type', 'product.material')
+                ->get();
+                
+    
+            return response()->json([
+                'message' => 'All orders retrieved',
+                'data' => $getAllOrders
+            ], Response::HTTP_OK);
+    
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving orders ' . $th->getMessage());
+    
+            return response()->json([
+                'message' => 'Error retrieving orders'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //GET ONE ORDER 
 
     public function getOneOrder($id){
