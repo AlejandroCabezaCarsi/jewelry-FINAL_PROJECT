@@ -10,10 +10,10 @@ class Product extends Model
     use HasFactory;
 
     public function material() {
-        return $this -> belongsTo(Material::class);
+        return $this -> belongsTo(Material::class, 'material_ID');
     }
     public function type() {
-        return $this -> belongsTo(Type::class);
+        return $this -> belongsTo(Type::class, 'type_ID');
     }
 
     public function orders(){

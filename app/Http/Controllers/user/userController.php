@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -250,6 +251,26 @@ class userController extends Controller
             return response()->json([
                 'message' => 'All users retrieved',
                 'data' => $getAllUsers
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving users ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving users'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    public function getOneUserByToken(){
+        try {
+            
+            $user = Auth::user();
+
+            return response()->json([
+                'message' => 'User retrieved',
+                'data' => $user
             ], Response::HTTP_OK);
 
         } catch (\Throwable $th) {

@@ -74,7 +74,7 @@ class orderController extends Controller
             //     ], Response::HTTP_UNAUTHORIZED);
             // };
 
-            $getAllOrders = Order::all();
+            $getAllOrders = Order::with('product', 'product.type', 'product.material')->get();
 
             return response()->json([
                 'message' => 'All orders retrieved',
