@@ -4,6 +4,7 @@ namespace App\Http\Controllers\order;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\StatusOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
@@ -90,38 +91,101 @@ class orderController extends Controller
         }
     }
 
-    //GET ALL ORDERS
+    //GET ALL ORDERS BY USER ID
 
-    public function getAllOrdersByUserID(){
-        try {
-            $user = auth()->user();
+    // public function getAllOrdersByUserID(){
+    //     try {
+    //         $user = auth()->user();
     
-            if (!$user) {
-                return response()->json([
-                    'message' => 'User not authenticated'
-                ], Response::HTTP_UNAUTHORIZED);
-            }
+    //         if (!$user) {
+    //             return response()->json([
+    //                 'message' => 'User not authenticated'
+    //             ], Response::HTTP_UNAUTHORIZED);
+    //         }
     
-            $userID = $user->id;
+    //         $userID = $user->id;
     
-            $getAllOrders = Order::where('user_id', $userID)
-                ->with('product', 'product.type', 'product.material')
-                ->get();
-                
+    //         $getAllOrders = Order::where('user_id', $userID)
+    //             ->with('product', 'product.type', 'product.material')
+    //             ->get();
     
+    //         return response()->json([
+    //             'message' => 'All orders retrieved',
+    //             'data' => $getAllOrders,
+
+    //         ], Response::HTTP_OK);
+    
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error retrieving orders ' . $th->getMessage());
+    
+    //         return response()->json([
+    //             'message' => 'Error retrieving orders'
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+    // public function getAllOrdersByUserID(){
+    //     try {
+    //         $user = auth()->user();
+    
+    //         if (!$user) {
+    //             return response()->json([
+    //                 'message' => 'User not authenticated'
+    //             ], Response::HTTP_UNAUTHORIZED);
+    //         }
+    
+    //         $userID = $user->id;
+    
+    //         $getAllOrders = Order::where('user_id', $userID)
+    //             ->with('product', 'product.type', 'product.material')
+    //             ->get();
+    
+    //         return response()->json([
+    //             'message' => 'All orders retrieved',
+    //             'data' => $getAllOrders,
+    //         ], Response::HTTP_OK);
+    
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error retrieving orders ' . $th->getMessage());
+    
+    //         return response()->json([
+    //             'message' => 'Error retrieving orders'
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+    public function getAllOrdersByUserID()
+{
+    try {
+        $user = auth()->user();
+
+        if (!$user) {
             return response()->json([
-                'message' => 'All orders retrieved',
-                'data' => $getAllOrders
-            ], Response::HTTP_OK);
-    
-        } catch (\Throwable $th) {
-            Log::error('Error retrieving orders ' . $th->getMessage());
-    
-            return response()->json([
-                'message' => 'Error retrieving orders'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                'message' => 'User not authenticated'
+            ], Response::HTTP_UNAUTHORIZED);
         }
+
+        $userID = $user->id;
+
+        $getAllOrders = Order::where('user_ID', $userID)
+            ->with('product', 'product.type', 'product.material', 'user', 'statusOrders')
+            ->get();
+
+        return response()->json([
+            'message' => 'All orders retrieved',
+            'data' => $getAllOrders,
+        ], Response::HTTP_OK);
+
+    } catch (\Throwable $th) {
+        Log::error('Error retrieving orders ' . $th->getMessage());
+
+        return response()->json([
+            'message' => 'Error retrieving orders'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+}
+
+    
 
     //GET ONE ORDER 
 

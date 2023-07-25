@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('type_ID');
             $table->boolean('diamonds');
             $table->integer('reference');
+            $table->float('price');
 
             $table -> foreign('material_ID')->references('id')->on('materials');
             $table -> foreign('type_ID')->references('id')->on('types');

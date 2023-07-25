@@ -31,6 +31,7 @@ Route::post('/register', [userController::class, 'register']);
 Route::post('/login', [userController::class, 'login']);
 Route::delete('/delete', [userController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::put('/update', [userController::class, 'updateMyAccount'])->middleware('auth:sanctum');
+Route::put('/updatePassword', [userController::class, 'updatePassword'])->middleware('auth:sanctum');
 Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('auth:sanctum');
 Route::post('/restoreAccount/{id}', [userController::class, 'restoreAccount']);
 Route::get('/getUserInfoByToken', [userController::class, 'getOneUserByToken'])->middleware('auth:sanctum');

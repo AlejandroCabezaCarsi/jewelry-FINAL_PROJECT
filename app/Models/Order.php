@@ -16,10 +16,10 @@ class Order extends Model
     ];
 
     public function user() {
-        return $this -> belongsTo(User::class);
+        return $this -> belongsTo(User::class, 'user_ID');
     }
     public function statusOrders() {
-        return $this -> belongsTo(StatusOrders::class);
+        return $this -> belongsTo(StatusOrder::class, 'statusOrder_ID');
     }
 
     public function product(){
