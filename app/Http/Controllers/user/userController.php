@@ -340,7 +340,8 @@ public function getAllUsersFiltered(Request $request)
         if ($nameOrEmail) {
             $query->where(function ($q) use ($nameOrEmail) {
                 $q->where('name', 'like', "%$nameOrEmail%")
-                  ->orWhere('email', 'like', "%$nameOrEmail%");
+                  ->orWhere('email', 'like', "%$nameOrEmail%")
+                  ->orWhere('surname', 'like', "%$nameOrEmail%");
             });
         }
 
