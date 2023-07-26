@@ -315,38 +315,38 @@ class userController extends Controller
 
     //GET ALL USERS FILTERED
 
-    public function getAllUsersFiltered(Request $request)
-{
-    try {
+public function getAllUsersFiltered(Request $request)
+    {
+
         $user = auth()->user();
 
         if (!$user) {
-            return response("No tienes acceso", 401);
+            return response("User not found", 401);
         }
 
-        $validator = Validator::make($request->all(), [
-            'role_ID' => 'integer',
-        ]);
+        $roleSelected = $request->input('roleSelected');
+        $nameOrEmail = $request->input('nameOrEmail');
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+        $query = User::query();
+
+        if ($roleSelected || $nameOrEmail) {
+            $query->with('role');
         }
 
-        $validData = $validator->validated();
-        $userFiltered = User::with('role')->where('role_ID', $validData['role_ID'])->get();
+        if ($roleSelected) {
+            $query->where('role_id', $roleSelected);
+        }
 
-        return response()->json([
-            'message' => 'Users retrieved',
-            'data' => $userFiltered
-        ], Response::HTTP_OK);
+        if ($nameOrEmail) {
+            $query->where(function ($q) use ($nameOrEmail) {
+                $q->where('name', 'like', "%$nameOrEmail%")
+                  ->orWhere('email', 'like', "%$nameOrEmail%");
+            });
+        }
 
-    } catch (\Throwable $th) {
-        Log::error('Error retrieving users ' . $th->getMessage());
+        $users = $query->get();
 
-        return response()->json([
-            'message' => 'Error retrieving users'
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(['data' => $users]);
     }
-}
 
 }
