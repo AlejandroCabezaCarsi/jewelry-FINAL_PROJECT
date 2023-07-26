@@ -215,94 +215,6 @@ class userController extends Controller
         }
     }
 
-// public function updatePassword(Request $request)
-// {
-//     $validator = Validator::make($request->all(), [
-//         'oldPassword' => 'required|string',
-//         'newPassword' => 'required|string'
-//     ]);
-
-//     if ($validator->fails()) {
-//         return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
-//     }
-
-//     $user = Auth::user();
-
-//     if (!$user) {
-//         return response()->json(['message' => 'Usuario no encontrado'], Response::HTTP_NOT_FOUND);
-//     }
-
-//     // Verificamos si la contraseña antigua proporcionada coincide con la contraseña actual del usuario
-//     if (!Hash::check($request->oldPassword, $user->password)) {
-//         return response()->json(['message' => 'Contraseña antigua incorrecta'], Response::HTTP_UNAUTHORIZED);
-//     }
-
-//     // Actualizamos la contraseña del usuario
-//     $user->password = Hash::make($request->newPassword);
-//     $user->save();
-
-//     return response()->json(['message' => 'Contraseña actualizada correctamente'], Response::HTTP_OK);
-// }
-
-// public function updatePassword(Request $request)
-// {
-//     $validator = Validator::make($request->all(), [
-//         'oldPassword' => 'required|string',
-//         'newPassword' => 'required|string'
-//     ]);
-
-//     if ($validator->fails()) {
-//         return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
-//     }
-
-//     $user = Auth::user();
-
-//     if (!$user) {
-//         return response()->json(['message' => 'Usuario no encontrado'], Response::HTTP_NOT_FOUND);
-//     }
-
-//     // Verificamos si la contraseña antigua proporcionada coincide con la contraseña actual del usuario
-//     if (!Hash::check($request->oldPassword, $user->password)) {
-//         return response()->json(['message' => 'Contraseña antigua incorrecta'], Response::HTTP_UNAUTHORIZED);
-//     }
-
-//     // Actualizamos la contraseña del usuario
-//     $user->password = Hash::make($request->newPassword);
-//     $user->save();
-
-//     return response()->json(['message' => 'Contraseña actualizada correctamente'], Response::HTTP_OK);
-// }
-
-
-// public function updatePassword(Request $request)
-// {
-//     $validator = Validator::make($request->all(), [
-//         'oldPassword' => 'required|string',
-//         'newPassword' => 'required|string'
-//     ]);
-
-//     if ($validator->fails()) {
-//         return response()->json(['errors' => $validator->errors()], Response::HTTP_BAD_REQUEST);
-//     }
-
-//     $user = Auth::user();
-
-//     if (!$user) {
-//         return response()->json(['message' => 'Usuario no encontrado'], Response::HTTP_NOT_FOUND);
-//     }
-
-//     // Verificamos si la contraseña antigua proporcionada coincide con la contraseña actual del usuario
-//     if (!Hash::check($request->oldPassword, $user->password)) {
-//         return response()->json(['message' => 'Contraseña antigua incorrecta'], Response::HTTP_UNAUTHORIZED);
-//     }
-
-//     // Actualizamos la contraseña del usuario
-//     $user->password = Hash::make($request->newPassword);
-//     $user->save();
-
-//     return response()->json(['message' => 'Contraseña actualizada correctamente'], Response::HTTP_OK);
-// }
-
     //USER DELETE
 
     public function deleteMyAccount(){
@@ -363,7 +275,7 @@ class userController extends Controller
             // ], Response::HTTP_UNAUTHORIZED);
             // }
 
-            $getAllUsers = User::all();
+            $getAllUsers = User::with('role')->get();
 
             return response()->json([
                 'message' => 'All users retrieved',
