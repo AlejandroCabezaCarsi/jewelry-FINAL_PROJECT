@@ -3,6 +3,7 @@
 use App\Http\Controllers\buy\buyController;
 use App\Http\Controllers\materials\materialsController;
 use App\Http\Controllers\order\orderController;
+use App\Http\Controllers\role\roleController;
 use App\Http\Controllers\statusOrder\statusOrdersController;
 use App\Http\Controllers\type\typeController;
 use App\Http\Controllers\user\userController;
@@ -35,6 +36,8 @@ Route::put('/updatePassword', [userController::class, 'updatePassword'])->middle
 Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('auth:sanctum');
 Route::post('/restoreAccount/{id}', [userController::class, 'restoreAccount']);
 Route::get('/getUserInfoByToken', [userController::class, 'getOneUserByToken'])->middleware('auth:sanctum');
+Route::post('/getAllUsersFiltered', [userController::class, 'getAllUsersFiltered'])->middleware('auth:sanctum');
+
 
 //MATERIAL ROUTES 
 
@@ -73,3 +76,7 @@ Route::get('/getOrder/{id}', [orderController::class, 'getOneOrder']);
 //BUY ROUTES 
 
 Route::get('/getAllBuys', [buyController::class, 'getAllBuys'])->middleware('auth:sanctum');
+
+//ROLE ROUTES
+
+Route::get('/getAllRoles', [roleController::class, 'getAllRoles'])->middleware('auth:sanctum');

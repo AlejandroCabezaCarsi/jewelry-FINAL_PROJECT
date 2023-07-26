@@ -291,6 +291,8 @@ class userController extends Controller
         }
     }
 
+    //GET ONE USER BY TOKEN
+
 
     public function getOneUserByToken(){
         try {
@@ -311,5 +313,40 @@ class userController extends Controller
         }
     }
 
+    //GET ALL USERS FILTERED
+
+    public function getAllUsersFiltered(Request $request)
+{
+    try {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response("No tienes acceso", 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'role_ID' => 'integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validData = $validator->validated();
+        $userFiltered = User::with('role')->where('role_ID', $validData['role_ID'])->get();
+
+        return response()->json([
+            'message' => 'Users retrieved',
+            'data' => $userFiltered
+        ], Response::HTTP_OK);
+
+    } catch (\Throwable $th) {
+        Log::error('Error retrieving users ' . $th->getMessage());
+
+        return response()->json([
+            'message' => 'Error retrieving users'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
 
 }
