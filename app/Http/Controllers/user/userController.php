@@ -245,9 +245,11 @@ class userController extends Controller
 
     //USER RESTORE
 
-    public function restoreAccount($id){
+    public function restoreAccount(Request $request){
         try {
-            User::withTrashed()->where('id',$id)->restore();
+            
+            $email = $request->input('email');
+            User::withTrashed()->where('email',$email)->restore();
 
             return response()->json([
                 'message'=>'User restored'
@@ -348,6 +350,32 @@ public function getAllUsersFiltered(Request $request)
         $users = $query->get();
 
         return response()->json(['data' => $users]);
+    }
+
+    //GET ALL DELETED USERS
+
+    public function getAllDeletedUsers()
+    {
+        try {
+            $user = auth()->user();
+    
+            if (!$user) {
+                return response("User not found", 401);
+            }
+    
+            $getAllUsers = User::with('role')->whereNotNull('deleted_at')->get();
+    
+            return response()->json([
+                'message' => 'User retrieved',
+                'data' => $getAllUsers
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving users ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving users'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
