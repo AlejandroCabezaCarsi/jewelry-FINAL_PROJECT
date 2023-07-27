@@ -37,7 +37,7 @@ Route::get('/getAllUsers', [userController::class, 'getAllUsers'])->middleware('
 Route::post('/restoreAccount', [userController::class, 'restoreAccount'])->middleware('auth:sanctum');
 Route::get('/getUserInfoByToken', [userController::class, 'getOneUserByToken'])->middleware('auth:sanctum');
 Route::post('/getAllUsersFiltered', [userController::class, 'getAllUsersFiltered'])->middleware('auth:sanctum');
-Route::post('/getAllDeletedUsers', [userController::class, 'getAllDeletedUsers'])->middleware('auth:sanctum');
+Route::get('/getAllDeletedUsers', [userController::class, 'getAllDeletedUsers'])->middleware('auth:sanctum');
 
 
 

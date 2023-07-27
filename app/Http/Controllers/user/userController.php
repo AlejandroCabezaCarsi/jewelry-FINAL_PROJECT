@@ -360,14 +360,19 @@ public function getAllUsersFiltered(Request $request)
             $user = auth()->user();
     
             if (!$user) {
-                return response("User not found", 401);
+                return response()->json([
+                'message' => 'User not found'
+            ], Response::HTTP_UNAUTHORIZED);
             }
     
-            $getAllUsers = User::with('role')->whereNotNull('deleted_at')->get();
+            
+        $deletedUsers = User::onlyTrashed()->with('role')->get();
+
+
     
             return response()->json([
                 'message' => 'User retrieved',
-                'data' => $getAllUsers
+                'data' => $deletedUsers
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error retrieving users ' . $th->getMessage());
