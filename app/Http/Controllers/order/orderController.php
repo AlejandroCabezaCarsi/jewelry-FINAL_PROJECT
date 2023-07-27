@@ -154,9 +154,11 @@ class orderController extends Controller
     //     }
     // }
 
-    public function getAllOrdersByUserID()
+    public function getAllOrdersByUserID(Request $request)
 {
     try {
+
+
         $user = auth()->user();
 
         if (!$user) {
@@ -165,7 +167,32 @@ class orderController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        $userID = $user->id;
+        $petitionUserID = $user->id;
+
+        $userID = $request->input('id'); 
+
+        $role = $user->role_ID;
+
+        if ($petitionUserID !== $userID){
+
+            if ($role === 1 || $role === 2){
+
+                $getAllOrders = Order::where('user_ID', $userID)
+                ->with('product', 'product.type', 'product.material', 'user', 'statusOrders')
+                ->get();
+
+                return response()->json([
+                    'message' => 'All orders retrieved',
+                    'data' => $getAllOrders,
+                ], Response::HTTP_OK);
+
+            } else{
+                return response()->json([
+                    'message' => 'You dont have permission',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+        }
 
         $getAllOrders = Order::where('user_ID', $userID)
             ->with('product', 'product.type', 'product.material', 'user', 'statusOrders')

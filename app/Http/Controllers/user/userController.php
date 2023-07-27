@@ -383,4 +383,35 @@ public function getAllUsersFiltered(Request $request)
         }
     }
 
+    //GET ONE USER BY HIS ID 
+
+    public function getUserDataByID(Request $request) 
+    {
+        try {
+
+            $id = $request->input('id'); 
+
+            $user = auth()->user();
+    
+            if (!$user) {
+                return response()->json([
+                'message' => 'User not found'
+            ], Response::HTTP_UNAUTHORIZED);
+            };
+
+            $userData = User::with('role')->where('id', $id )->get();
+
+            return response()->json([
+                'message' => 'User retrieved',
+                'data' => $userData
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving user ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving users'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

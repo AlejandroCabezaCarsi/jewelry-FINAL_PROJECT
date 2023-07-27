@@ -38,6 +38,7 @@ Route::post('/restoreAccount', [userController::class, 'restoreAccount'])->middl
 Route::get('/getUserInfoByToken', [userController::class, 'getOneUserByToken'])->middleware('auth:sanctum');
 Route::post('/getAllUsersFiltered', [userController::class, 'getAllUsersFiltered'])->middleware('auth:sanctum');
 Route::get('/getAllDeletedUsers', [userController::class, 'getAllDeletedUsers'])->middleware('auth:sanctum');
+Route::post('/getUserDataByID', [userController::class, 'getUserDataByID'])->middleware('auth:sanctum');
 
 
 
@@ -71,7 +72,7 @@ Route::get('/getOneStatusOrder/{id}', [statusOrdersController::class, 'getOneSta
 
 Route::post('/createOrder', [orderController::class, 'createOrder'])->middleware('auth:sanctum');
 Route::get('/getAllOrders', [orderController::class, 'getAllOrders'])->middleware('auth:sanctum');
-Route::get('/getAllOrdersByUserID', [orderController::class, 'getAllOrdersByUserID'])->middleware('auth:sanctum');
+Route::post('/getAllOrdersByUserID', [orderController::class, 'getAllOrdersByUserID'])->middleware('auth:sanctum');
 Route::get('/getOrder/{id}', [orderController::class, 'getOneOrder']);
 
 
