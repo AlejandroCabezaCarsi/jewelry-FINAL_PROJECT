@@ -247,9 +247,23 @@ class userController extends Controller
 
     public function restoreAccount(Request $request){
         try {
+
+            $user = auth()->user();
+
+            if (!$user) {
+                return response()->json([
+                'message' => 'User not found'
+            ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            // if($user['role_ID']!= 1 || 2){
+            //     return response()->json([
+            //         'message' => 'You dont have athoritation to delete a user'
+            //     ], Response::HTTP_UNAUTHORIZED);
+            // };
             
-            $email = $request->input('email');
-            User::withTrashed()->where('email',$email)->restore();
+            $id = $request->input('id');
+            User::withTrashed()->where('id',$id)->restore();
 
             return response()->json([
                 'message'=>'User restored'
