@@ -39,6 +39,7 @@ Route::get('/getUserInfoByToken', [userController::class, 'getOneUserByToken'])-
 Route::post('/getAllUsersFiltered', [userController::class, 'getAllUsersFiltered'])->middleware('auth:sanctum');
 Route::get('/getAllDeletedUsers', [userController::class, 'getAllDeletedUsers'])->middleware('auth:sanctum');
 Route::post('/getUserDataByID', [userController::class, 'getUserDataByID'])->middleware('auth:sanctum');
+Route::post('/getOneDeletedUserByID', [userController::class, 'getOneDeletedUserByID'])->middleware('auth:sanctum');
 
 
 

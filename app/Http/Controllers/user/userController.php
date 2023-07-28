@@ -414,4 +414,38 @@ public function getAllUsersFiltered(Request $request)
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    //GET ONE DELETED USER BY ID
+
+    public function getOneDeletedUserByID (Request $request)
+    {
+        try{
+
+        $user = auth()->user();
+    
+        if (!$user) {
+            return response()->json([
+            'message' => 'User not found'
+        ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $deletedUsers = User::onlyTrashed()->with('role')->where('id', $request->input('id'))->get();
+
+
+    
+            return response()->json([
+                'message' => 'User retrieved',
+                'data' => $deletedUsers
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving users ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving users'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+
+    
 }
