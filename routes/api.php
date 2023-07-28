@@ -40,6 +40,7 @@ Route::post('/getAllUsersFiltered', [userController::class, 'getAllUsersFiltered
 Route::get('/getAllDeletedUsers', [userController::class, 'getAllDeletedUsers'])->middleware('auth:sanctum');
 Route::post('/getUserDataByID', [userController::class, 'getUserDataByID'])->middleware('auth:sanctum');
 Route::post('/getOneDeletedUserByID', [userController::class, 'getOneDeletedUserByID'])->middleware('auth:sanctum');
+Route::delete('/destroyUser', [userController::class, 'destroyAccount'])->middleware('auth:sanctum');
 
 
 

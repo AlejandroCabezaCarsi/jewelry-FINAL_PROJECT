@@ -215,7 +215,43 @@ class userController extends Controller
         }
     }
 
-    //USER DELETE
+    //USER DESTROY
+
+    public function destroyAccount(Request $request)
+    {
+        try {
+            $userPetition = auth()->user();
+        
+            if (!$userPetition) {
+                return response()->json([
+                    'message' => 'User not found'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+        
+            $user = User::withTrashed()->find($request->input('id'));
+        
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User not found'
+                ], Response::HTTP_NOT_FOUND);
+            }
+        
+            $user->forceDelete(); 
+        
+            return response()->json([
+                'message' => 'User permanently deleted'
+            ], Response::HTTP_OK);
+        
+        } catch (\Throwable $th) {
+            Log::error('Error deleting user: ' . $th->getMessage());
+        
+            return response()->json([
+                'message' => 'Error deleting user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //USER SOFT DELETE
 
     public function deleteMyAccount(){
         try {
@@ -337,7 +373,9 @@ public function getAllUsersFiltered(Request $request)
         $user = auth()->user();
 
         if (!$user) {
-            return response("User not found", 401);
+            return response()->json([
+            'message' => 'User not found'
+        ], Response::HTTP_UNAUTHORIZED);
         }
 
         $roleSelected = $request->input('roleSelected');
