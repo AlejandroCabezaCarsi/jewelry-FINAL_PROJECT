@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('diamonds');
             $table->integer('reference');
             $table->float('price');
+            $table->string('description');
+            $table->string('image');
 
             $table -> foreign('material_ID')->references('id')->on('materials');
             $table -> foreign('type_ID')->references('id')->on('types');

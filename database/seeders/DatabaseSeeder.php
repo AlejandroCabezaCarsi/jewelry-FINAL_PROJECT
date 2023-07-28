@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
                 StatusSeeder::class,
                 MaterialSeeder::class,
                 StatusOrderSeeder::class,
-                TypeSeeder::class
+                TypeSeeder::class,
+                ProductSeeder::class,
+                UserSeeder::class
             ]);
             
             \App\Models\User::factory(10)->create();
