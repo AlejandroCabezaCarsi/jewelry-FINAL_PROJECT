@@ -35,7 +35,7 @@ class orderController extends Controller
             foreach ($validData as $newOrder => $value) {
                 
                 $order = Order::create([
-                    'date' => "2023-07-13 10:38:48",
+                    'date' => now(),
                     'statusOrder_ID' => 1,
                     'user_ID' => $userID
                 ]);
@@ -46,7 +46,7 @@ class orderController extends Controller
 
             return response()->json([
                 'message' => 'Order created',
-                'data' => $newOrder,
+                'data' => $order,
             ], Response::HTTP_CREATED);
 
         } catch (\Throwable $th) {
@@ -75,7 +75,7 @@ class orderController extends Controller
             //     ], Response::HTTP_UNAUTHORIZED);
             // };
 
-            $getAllOrders = Order::with('product', 'product.type', 'product.material')->get();
+            $getAllOrders = Order::with('products', 'products.type', 'products.material')->get();
 
             return response()->json([
                 'message' => 'All orders retrieved',
@@ -178,7 +178,7 @@ class orderController extends Controller
             if ($role === 1 || $role === 2){
 
                 $getAllOrders = Order::where('user_ID', $userID)
-                ->with('product', 'product.type', 'product.material', 'user', 'statusOrders')
+                ->with('products', 'products.type', 'products.material', 'user', 'statusOrders')
                 ->get();
 
                 return response()->json([
@@ -195,7 +195,7 @@ class orderController extends Controller
         }
 
         $getAllOrders = Order::where('user_ID', $userID)
-            ->with('product', 'product.type', 'product.material', 'user', 'statusOrders')
+            ->with('products', 'product.types', 'products.material', 'user', 'statusOrders')
             ->get();
 
         return response()->json([
@@ -226,7 +226,7 @@ class orderController extends Controller
             //     ], Response::HTTP_UNAUTHORIZED);
             // };
 
-            $order = Order::with('product')->find($id);
+            $order = Order::with('products')->find($id);
 
             return response()->json([
                 'message' => 'All orders retrieved',
