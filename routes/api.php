@@ -58,8 +58,8 @@ Route::get('/getOneMaterial/{id}', [materialsController::class, 'getOneMaterialB
 Route::post('/createType', [typeController::class, 'createType'])->middleware('auth:sanctum');
 Route::delete('/deleteType/{id}', [typeController::class, 'deleteTypeByID'])->middleware(('auth:sanctum'));
 Route::put('/updateType/{id}', [typeController::class, 'updateType'])->middleware('auth:sanctum');
-Route::get('/getAllTypes', [typeController::class, 'getAllTypes'])->middleware('auth:sanctum');
-Route::get('/getOneType/{id}', [typeController::class, 'getOneTypeByID'])->middleware('auth:sanctum');
+Route::get('/getAllTypes', [typeController::class, 'getAllTypes']);
+Route::get('/getOneType/{id}', [typeController::class, 'getOneTypeByID']);
 
 
 //STATUS ORDER ROUTES
@@ -91,3 +91,4 @@ Route::get('/getAllRoles', [roleController::class, 'getAllRoles'])->middleware('
 //PRODUCT ROUTES
 
 Route::get('/getAllProducts', [productController::class, 'getAllProducts']);
+Route::post('getAllProductsFiltered', [productController::class, 'getAllProductsFiltered']);
