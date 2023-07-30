@@ -3,6 +3,7 @@
 use App\Http\Controllers\buy\buyController;
 use App\Http\Controllers\materials\materialsController;
 use App\Http\Controllers\order\orderController;
+use App\Http\Controllers\product\productController;
 use App\Http\Controllers\role\roleController;
 use App\Http\Controllers\statusOrder\statusOrdersController;
 use App\Http\Controllers\type\typeController;
@@ -85,3 +86,8 @@ Route::get('/getAllBuys', [buyController::class, 'getAllBuys'])->middleware('aut
 //ROLE ROUTES
 
 Route::get('/getAllRoles', [roleController::class, 'getAllRoles'])->middleware('auth:sanctum');
+
+
+//PRODUCT ROUTES
+
+Route::get('/getAllProducts', [productController::class, 'getAllProducts']);

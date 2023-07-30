@@ -195,7 +195,7 @@ class orderController extends Controller
         }
 
         $getAllOrders = Order::where('user_ID', $userID)
-            ->with('products', 'product.types', 'products.material', 'user', 'statusOrders')
+            ->with('products', 'products.type', 'products.material', 'user', 'statusOrders')
             ->get();
 
         return response()->json([
