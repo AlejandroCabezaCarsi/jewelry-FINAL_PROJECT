@@ -1,8 +1,7 @@
 {
     "version": 2,
-        "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/*.php": { "runtime": "vercel-php@0.6.0" }
     },
     "routes": [{
         "src": "/(.*)",
@@ -20,7 +19,7 @@
         "APP_SERVICES_CACHE": "/tmp/services.php",
         "VIEW_COMPILED_PATH": "/tmp",
 
-        "CACHE _DRIVER": "array",
+        "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie"
     }
