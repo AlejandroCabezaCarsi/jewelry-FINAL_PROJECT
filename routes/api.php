@@ -77,6 +77,8 @@ Route::post('/createOrder', [orderController::class, 'createOrder'])->middleware
 Route::get('/getAllOrders', [orderController::class, 'getAllOrders'])->middleware('auth:sanctum');
 Route::post('/getAllOrdersByUserID', [orderController::class, 'getAllOrdersByUserID'])->middleware('auth:sanctum');
 Route::get('/getOrder/{id}', [orderController::class, 'getOneOrder']);
+Route::post('/getAllOrdersFiltered', [orderController::class, 'getAllOrdersFiltered'])->middleware('auth:sanctum');
+
 
 
 //BUY ROUTES 

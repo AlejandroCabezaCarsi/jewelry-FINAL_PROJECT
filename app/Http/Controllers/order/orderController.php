@@ -69,9 +69,9 @@ class orderController extends Controller
 
             $user = auth()->user();
 
-            // if($user['role_ID']!= 1 || 2){
+            // if($user['role_ID']>3){
             //     return response()->json([
-            //         'message' => 'You dont have athoritation to delete a user'
+            //         'message' => 'You dont have athoritation to get all orders'
             //     ], Response::HTTP_UNAUTHORIZED);
             // };
 
@@ -241,4 +241,36 @@ class orderController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    //GET ALL ORDERS FILTERED
+
+    public function getAllOrdersFiltered(Request $request)
+{
+        try {
+        
+            $statusSelected = $request->input('statusOrderSelected'); 
+            
+
+            $query = Order::with('products'); 
+
+            if ($statusSelected) {
+                $query->where('statusOrder_ID', $statusSelected);
+            }
+
+            $order = $query->get();
+
+
+            return response()->json([
+                'message' => 'Orders filtered retrieved',
+                'data' => $order
+            ], Response::HTTP_OK);
+    } catch (\Throwable $th) {
+        Log::error('Error retrieving orders ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving orders'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+    
 }
