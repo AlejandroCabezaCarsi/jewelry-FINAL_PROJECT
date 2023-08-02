@@ -77,7 +77,7 @@ class orderController extends Controller
 
             $statusSelected = $request->input('statusOrderSelected'); 
 
-            $query = Order::with('products','statusOrders'); 
+            $query = Order::with('products','statusOrders', 'user'); 
 
             if ($statusSelected) {
                 $query->where('statusOrder_ID', $statusSelected);
@@ -88,7 +88,7 @@ class orderController extends Controller
                 ], Response::HTTP_OK);
             }
 
-            $getAllOrders = Order::with('products', 'products.type', 'products.material', 'statusOrders')->get();
+            $getAllOrders = Order::with('products', 'products.type', 'products.material', 'statusOrders', 'user')->get();
 
             return response()->json([
                 'message' => 'All orders retrieved',
