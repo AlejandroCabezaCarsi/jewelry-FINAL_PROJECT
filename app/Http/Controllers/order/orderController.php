@@ -64,18 +64,31 @@ class orderController extends Controller
 
     //GET ALL ORDERS
 
-    public function getAllOrders(){
+    public function getAllOrders(Request $request){
         try {
 
             $user = auth()->user();
 
-            // if($user['role_ID']>3){
-            //     return response()->json([
-            //         'message' => 'You dont have athoritation to get all orders'
-            //     ], Response::HTTP_UNAUTHORIZED);
-            // };
+            if($user['role_ID']>3){
+                return response()->json([
+                    'message' => 'You dont have athoritation to get all orders'
+                ], Response::HTTP_UNAUTHORIZED);
+            };
 
-            $getAllOrders = Order::with('products', 'products.type', 'products.material')->get();
+            $statusSelected = $request->input('statusOrderSelected'); 
+
+            $query = Order::with('products','statusOrders'); 
+
+            if ($statusSelected) {
+                $query->where('statusOrder_ID', $statusSelected);
+                $order = $query->get();
+                return response()->json([
+                    'message' => 'Orders filtered retrieved',
+                    'data' => $order
+                ], Response::HTTP_OK);
+            }
+
+            $getAllOrders = Order::with('products', 'products.type', 'products.material', 'statusOrders')->get();
 
             return response()->json([
                 'message' => 'All orders retrieved',
@@ -92,67 +105,6 @@ class orderController extends Controller
     }
 
     //GET ALL ORDERS BY USER ID
-
-    // public function getAllOrdersByUserID(){
-    //     try {
-    //         $user = auth()->user();
-    
-    //         if (!$user) {
-    //             return response()->json([
-    //                 'message' => 'User not authenticated'
-    //             ], Response::HTTP_UNAUTHORIZED);
-    //         }
-    
-    //         $userID = $user->id;
-    
-    //         $getAllOrders = Order::where('user_id', $userID)
-    //             ->with('product', 'product.type', 'product.material')
-    //             ->get();
-    
-    //         return response()->json([
-    //             'message' => 'All orders retrieved',
-    //             'data' => $getAllOrders,
-
-    //         ], Response::HTTP_OK);
-    
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error retrieving orders ' . $th->getMessage());
-    
-    //         return response()->json([
-    //             'message' => 'Error retrieving orders'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
-
-    // public function getAllOrdersByUserID(){
-    //     try {
-    //         $user = auth()->user();
-    
-    //         if (!$user) {
-    //             return response()->json([
-    //                 'message' => 'User not authenticated'
-    //             ], Response::HTTP_UNAUTHORIZED);
-    //         }
-    
-    //         $userID = $user->id;
-    
-    //         $getAllOrders = Order::where('user_id', $userID)
-    //             ->with('product', 'product.type', 'product.material')
-    //             ->get();
-    
-    //         return response()->json([
-    //             'message' => 'All orders retrieved',
-    //             'data' => $getAllOrders,
-    //         ], Response::HTTP_OK);
-    
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error retrieving orders ' . $th->getMessage());
-    
-    //         return response()->json([
-    //             'message' => 'Error retrieving orders'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
 
     public function getAllOrdersByUserID(Request $request)
 {
@@ -242,35 +194,5 @@ class orderController extends Controller
         }
     }
 
-    //GET ALL ORDERS FILTERED
-
-    public function getAllOrdersFiltered(Request $request)
-{
-        try {
-        
-            $statusSelected = $request->input('statusOrderSelected'); 
-            
-
-            $query = Order::with('products'); 
-
-            if ($statusSelected) {
-                $query->where('statusOrder_ID', $statusSelected);
-            }
-
-            $order = $query->get();
-
-
-            return response()->json([
-                'message' => 'Orders filtered retrieved',
-                'data' => $order
-            ], Response::HTTP_OK);
-    } catch (\Throwable $th) {
-        Log::error('Error retrieving orders ' . $th->getMessage());
-
-            return response()->json([
-                'message' => 'Error retrieving orders'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-}
     
 }
