@@ -62,6 +62,48 @@ class orderController extends Controller
 
     //UPDATE ORDER
 
+    public function updateOrderByID (Request $request){
+        try {
+
+            $user = auth()->user();
+
+            if($user->role_ID >3){
+                return response()->json([
+                    'message' => 'You dont have athoritation to delete a user'
+                ], Response::HTTP_UNAUTHORIZED);
+            };
+
+            if(!$user){
+                return response()->json([
+                    'message' => 'User not found'
+                ], Response::HTTP_UNAUTHORIZED);
+            }; 
+
+            $orderFind = Order::find($request['id']);
+
+            if (!$orderFind) {
+                return response()->json([
+                    'message' => 'Order not found'
+                ]);
+            }
+
+            $orderFind->statusOrder_ID = $request['statusOrder_ID']; 
+
+            $orderFind->save();
+
+            return response()->json([
+                'message' => 'Order updated'
+            ], Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            Log::error('Error updating the order ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating the order '
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //GET ALL ORDERS
 
     public function getAllOrders(Request $request){
